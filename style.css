@@ -606,6 +606,37 @@ body.theme-iron .suit-toggle-btn {
   border-top: 10px solid var(--paper);
 }
 
+/* ── LIVE SPIDER-INTEL BROADCAST WIDGET ── */
+.intel-broadcast-box {
+  background: var(--ink); color: var(--paper);
+  border: 3.5px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--red);
+  padding: 14px 18px; max-width: 540px; margin: 24px 0 28px;
+  position: relative; text-align: left;
+}
+.intel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px; margin-bottom: 6px;
+}
+.intel-title {
+  font-size: 13.5px; color: var(--yellow); letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 8px;
+}
+.intel-title .dot.live-pulse {
+  width: 8px; height: 8px; background: #6BCB77; border-radius: 50%;
+  box-shadow: 0 0 8px #6BCB77;
+  animation: pulse-dot 1.5s infinite ease-in-out;
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+.intel-time { font-size: 11px; color: var(--muted); opacity: 0.85; }
+.intel-text {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px;
+  line-height: 1.45; color: var(--paper); font-weight: 500;
+}
+
 .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
 .btn {
   font-family: 'Bangers', cursive; letter-spacing: 0.03em;

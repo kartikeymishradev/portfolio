@@ -1136,6 +1136,25 @@ setTimeout(() => {
   }
 }, 120000);
 
+// ── LIVE TELEGRAM INTEL BROADCAST FETCH (/setmessage Parser) ──
+function fetchTelegramBroadcast() {
+  const intelText = document.getElementById('intel-text');
+  const intelTime = document.getElementById('intel-time');
+
+  fetch('/api/telegram-feed')
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.ok && data.broadcast) {
+        if (intelText) intelText.textContent = data.broadcast;
+        if (intelTime) intelTime.textContent = `UPDATED: ${data.time}`;
+      }
+    })
+    .catch(() => { /* Silent fallback */ });
+}
+
+fetchTelegramBroadcast();
+setInterval(fetchTelegramBroadcast, 30000); // Auto refresh every 30 seconds
+
 // ── PERFORMANCE: PAUSE rAF ANIMATION LOOPS WHEN TAB IS HIDDEN ──
 document.addEventListener('visibilitychange', () => {
   const isVisible = !document.hidden;
