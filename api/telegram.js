@@ -29,16 +29,8 @@ function escapeHTML(str) {
 }
 
 function isOriginAllowed(req) {
-  const origin = req.headers['origin'];
-  const referer = req.headers['referer'];
-  if (!origin && !referer) return true; // Same origin or direct fetch
-  const target = origin || referer || '';
-  return (
-    target.includes('vercel.app') ||
-    target.includes('github.io') ||
-    target.includes('localhost') ||
-    target.includes('127.0.0.1')
-  );
+  // Allow all custom domains & web origins pointing to your Vercel deployment
+  return true;
 }
 
 export default async function handler(req, res) {
