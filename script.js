@@ -29,7 +29,7 @@ soundToggleBtns.forEach(btn => {
 });
 
 const savedSound = localStorage.getItem('spider-sound');
-if (savedSound) {
+if (savedSound === 'on' || savedSound === 'off') {
   setSoundState(savedSound === 'on');
 }
 
@@ -171,7 +171,7 @@ if (suitToggleBtn) suitToggleBtn.addEventListener('click', toggleSuitTheme);
 if (mobileSuitToggleBtn) mobileSuitToggleBtn.addEventListener('click', toggleSuitTheme);
 
 const savedTheme = localStorage.getItem('spider-theme');
-if (savedTheme) {
+if (savedTheme && ['classic', 'miles', '2099', 'iron'].includes(savedTheme)) {
   setSuitTheme(savedTheme);
 }
 
@@ -316,7 +316,20 @@ function openCertModal(certKey) {
 
   if (certTitle) certTitle.textContent = info.title;
   if (certSubtitle) certSubtitle.textContent = info.subtitle;
-  if (certBody) certBody.innerHTML = info.body;
+  if (certBody) {
+    // Sanitize: only allow known safe tags from hardcoded certData
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = info.body;
+    // Strip any <script>, <iframe>, <object>, <embed>, <form> tags
+    tempDiv.querySelectorAll('script, iframe, object, embed, form, link, meta').forEach(el => el.remove());
+    // Strip event handler attributes from all elements
+    tempDiv.querySelectorAll('*').forEach(el => {
+      [...el.attributes].forEach(attr => {
+        if (attr.name.startsWith('on') || attr.name === 'srcdoc') el.removeAttribute(attr.name);
+      });
+    });
+    certBody.innerHTML = tempDiv.innerHTML;
+  }
   if (certLink) certLink.href = info.link;
 
   if (certPdfLink) {
@@ -990,8 +1003,7 @@ function sendTelegramAlert(actionName, extraDetails = {}) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: actionName, ...extraDetails })
   }).then(res => res.json())
-    .then(data => console.log('[Telegram Alert Status]', data))
-    .catch(err => console.log('[Telegram Alert Note] Secure Vercel backend ready.'));
+    .catch(() => { /* Telegram alert silently handled */ });
 }
 
 // Track PDF Certificate Clicks
