@@ -588,16 +588,20 @@ function createWebDecal(x, y) {
   svg.addEventListener('animationend', () => svg.remove());
 }
 
+let lastTouchTime = 0;
+
 document.addEventListener('touchstart', (e) => {
-  if (e.target.closest('a, button, input, textarea, select')) return;
+  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud')) return;
   if (e.touches.length > 0) {
+    lastTouchTime = Date.now();
     const t = e.touches[0];
     createWebDecal(t.clientX, t.clientY);
   }
 }, { passive: true });
 
 document.addEventListener('click', (e) => {
-  if (e.target.closest('a, button, input, textarea, select')) return;
+  if (Date.now() - lastTouchTime < 450) return; // Ignore duplicate click right after touchstart
+  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud')) return;
   createWebDecal(e.clientX, e.clientY);
 });
 

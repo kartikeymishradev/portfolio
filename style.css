@@ -1002,7 +1002,13 @@ footer { text-align: center; padding: 20px 24px 40px; }
 
   /* Web Decal Touch Feedback on Mobile */
   .web-decal {
-    width: 100px; height: 100px; opacity: 1;
+    width: 60px; height: 60px;
+    animation: web-pop-mobile 0.45s ease-out forwards;
+  }
+  @keyframes web-pop-mobile {
+    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0.85; }
+    50%  { transform: translate(-50%, -50%) scale(0.95); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
   }
 
   /* Hide desktop-only keyboard hints on mobile */
