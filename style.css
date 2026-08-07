@@ -919,10 +919,12 @@ footer { text-align: center; padding: 20px 24px 40px; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 
   /* Mobile Header / Nav */
-  .nav-links, .nav-actions .suit-toggle-btn { display: none; }
+  .nav-links, .nav-actions #pitch-toggle, .nav-actions #sound-toggle, .nav-actions .suit-toggle-btn { display: none !important; }
   .nav-toggle { display: flex; }
   .comic-header-banner { font-size: 9.5px; padding: 5px 12px; }
   .banner-badge { display: none; }
+
+  .mobile-tools-row { display: flex; gap: 8px; margin-top: 10px; }
 
   /* Mobile Container Padding & Margins */
   .container { padding: 0 16px; }

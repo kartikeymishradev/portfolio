@@ -9,24 +9,24 @@ reveals.forEach(el => io.observe(el));
 let audioCtx = null;
 let soundEnabled = true;
 
-const soundToggleBtn = document.getElementById('sound-toggle');
+const soundToggleBtns = document.querySelectorAll('#sound-toggle, #mobile-sound-toggle');
 
 function setSoundState(enabled) {
   soundEnabled = enabled;
-  if (soundToggleBtn) {
-    const labelEl = soundToggleBtn.querySelector('.sound-label');
-    const iconEl = soundToggleBtn.querySelector('.sound-icon');
+  soundToggleBtns.forEach(btn => {
+    const labelEl = btn.querySelector('.sound-label');
+    const iconEl = btn.querySelector('.sound-icon');
     if (labelEl) labelEl.textContent = enabled ? 'SOUND: ON' : 'SOUND: OFF';
     if (iconEl) iconEl.textContent = enabled ? '🔊' : '🔇';
-  }
+  });
   localStorage.setItem('spider-sound', enabled ? 'on' : 'off');
 }
 
-if (soundToggleBtn) {
-  soundToggleBtn.addEventListener('click', () => {
+soundToggleBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
     setSoundState(!soundEnabled);
   });
-}
+});
 
 const savedSound = localStorage.getItem('spider-sound');
 if (savedSound) {
@@ -355,7 +355,7 @@ if (certModal) {
 }
 
 // RECRUITER 30-SEC PITCH MODAL HANDLER
-const pitchToggle = document.getElementById('pitch-toggle');
+const pitchToggles = document.querySelectorAll('#pitch-toggle, #mobile-pitch-toggle');
 const pitchModal = document.getElementById('pitch-modal');
 const pitchClose = document.getElementById('pitch-close');
 const pitchDismiss = document.getElementById('pitch-dismiss');
@@ -369,7 +369,9 @@ function closePitchModal() {
   if (pitchModal) pitchModal.classList.remove('active');
   document.body.style.overflow = '';
 }
-if (pitchToggle) pitchToggle.addEventListener('click', openPitchModal);
+pitchToggles.forEach(btn => {
+  btn.addEventListener('click', openPitchModal);
+});
 if (pitchClose) pitchClose.addEventListener('click', closePitchModal);
 if (pitchDismiss) pitchDismiss.addEventListener('click', closePitchModal);
 if (pitchModal) {
