@@ -178,33 +178,7 @@ body {
   max-width: 100%; height: auto; display: block; margin: 0 auto;
 }
 
-/* ── FEATURE 1: ML SLOWDOWN SIMULATOR WIDGET ────── */
-.ml-simulator-box {
-  background: var(--ink); color: var(--paper);
-  border: 3px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--red);
-  padding: 16px 20px; margin: 20px 0 24px;
-}
-.sim-header {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
-}
-.sim-title { font-size: 16px; color: var(--yellow); letter-spacing: 0.04em; }
-.sim-badge {
-  font-size: 13px; padding: 3px 10px; border: 1.5px solid var(--paper);
-  box-shadow: 2px 2px 0 var(--paper); text-transform: uppercase;
-}
-.sim-badge.low { background: #2E7D32; color: #FFF; }
-.sim-badge.mod { background: var(--yellow); color: #15171C; }
-.sim-badge.high { background: var(--red); color: #FFF; }
 
-.sim-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-.sim-control { display: flex; flex-direction: column; gap: 4px; }
-.sim-lbl-row { display: flex; justify-content: space-between; font-size: 13px; font-family: 'IBM Plex Mono', monospace; }
-.sim-val { color: var(--yellow); font-weight: 700; }
-.sim-control input[type="range"] {
-  accent-color: var(--red); cursor: pointer; width: 100%;
-}
 
 /* ── COPY EMAIL TOAST ────────────────────────────── */
 .copy-toast {

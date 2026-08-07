@@ -819,47 +819,7 @@ if (!isTouch) {
   });
 }
 
-// ── 6. ARTHSPANDAN INTERACTIVE ML SLOWDOWN SIMULATOR ──
-const sliderGdp = document.getElementById('slider-gdp');
-const sliderInf = document.getElementById('slider-inf');
-const sliderOil = document.getElementById('slider-oil');
 
-const valGdp = document.getElementById('val-gdp');
-const valInf = document.getElementById('val-inf');
-const valOil = document.getElementById('val-oil');
-const simRiskBadge = document.getElementById('sim-risk-badge');
-
-function calculateSimulatedRisk() {
-  if (!sliderGdp || !sliderInf || !sliderOil || !simRiskBadge) return;
-
-  const gdp = parseFloat(sliderGdp.value);
-  const inf = parseFloat(sliderInf.value);
-  const oil = parseFloat(sliderOil.value);
-
-  if (valGdp) valGdp.textContent = gdp.toFixed(1) + '%';
-  if (valInf) valInf.textContent = inf.toFixed(1) + '%';
-  if (valOil) valOil.textContent = '$' + Math.round(oil) + '/bbl';
-
-  const risk = Math.min(95, Math.max(5, Math.round(20 + (6.5 - gdp) * 9 + (inf - 5.5) * 6 + (oil - 85) * 0.35)));
-
-  let label = 'LOW RISK';
-  let badgeClass = 'sim-badge low';
-
-  if (risk > 65) {
-    label = 'HIGH SLOWDOWN RISK';
-    badgeClass = 'sim-badge high';
-  } else if (risk >= 35) {
-    label = 'MODERATE RISK';
-    badgeClass = 'sim-badge mod';
-  }
-
-  simRiskBadge.textContent = `${label} // ${risk.toFixed(1)}%`;
-  simRiskBadge.className = badgeClass;
-}
-
-if (sliderGdp) sliderGdp.addEventListener('input', calculateSimulatedRisk);
-if (sliderInf) sliderInf.addEventListener('input', calculateSimulatedRisk);
-if (sliderOil) sliderOil.addEventListener('input', calculateSimulatedRisk);
 
 // ── 7. SPIDER-SENSE KEYBOARD SHORTCUTS ([T], [M], [R]) ──
 document.addEventListener('keydown', (e) => {
