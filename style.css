@@ -988,11 +988,13 @@ footer { text-align: center; padding: 20px 24px 40px; }
   .stats-card { padding: 22px 18px; }
   .skills-split-grid { grid-template-columns: 1fr; }
   
+  #contact { padding-bottom: 0 !important; }
   .finale-panel {
-    padding: 40px 20px; margin: 40px 12px 24px;
+    padding: 32px 18px; margin: 32px 12px 12px !important;
     clip-path: none !important;
   }
   .finale-btns { flex-direction: column; width: 100%; gap: 10px; }
+  footer { padding: 16px 16px 20px !important; margin: 0 !important; }
 
   .project-filters { margin-left: 12px; margin-right: 12px; }
   .filter-tab { flex: 1 1 auto; text-align: center; font-size: 14px; padding: 6px 10px; }

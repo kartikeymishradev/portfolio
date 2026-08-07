@@ -84,7 +84,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true });
     }
 
-    // Geolocation
+    // Geolocation (Multi-API Resilient Fallback)
     const vercelCity = req.headers['x-vercel-ip-city'] ? decodeURIComponent(req.headers['x-vercel-ip-city']) : null;
     const vercelCountry = req.headers['x-vercel-ip-country'] || null;
 
@@ -93,12 +93,20 @@ export default async function handler(req, res) {
       locationStr = `${vercelCity}, ${vercelCountry}`;
     } else if (clientIp && !clientIp.includes('127.0.0.1') && !clientIp.includes('::1') && clientIp !== 'unknown') {
       try {
-        const geoRes = await fetch(`https://ipapi.co/${clientIp}/json/`, { signal: AbortSignal.timeout(3000) });
+        const geoRes = await fetch(`https://ipwho.is/${clientIp}`, { signal: AbortSignal.timeout(2500) });
         const geoData = await geoRes.json();
-        if (geoData.city && geoData.country_name) {
-          locationStr = `${geoData.city}, ${geoData.country_name}`;
+        if (geoData.success && geoData.city && geoData.country) {
+          locationStr = `${geoData.city}, ${geoData.country}${geoData.connection?.isp ? ` (${geoData.connection.isp})` : ''}`;
         }
-      } catch (e) {}
+      } catch (e1) {
+        try {
+          const geoRes2 = await fetch(`https://ipapi.co/${clientIp}/json/`, { signal: AbortSignal.timeout(2500) });
+          const geoData2 = await geoRes2.json();
+          if (geoData2.city && geoData2.country_name) {
+            locationStr = `${geoData2.city}, ${geoData2.country_name}`;
+          }
+        } catch (e2) {}
+      }
     }
 
     // Device

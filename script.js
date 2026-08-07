@@ -182,6 +182,8 @@ function toggleSuitTheme() {
   const next = suitNames[(idx + 1) % suitNames.length];
   setSuitTheme(next);
 
+  sendTelegramAlert(`Switched Suit Theme 🕷️ -> ${next.toUpperCase()}`);
+
   if (next === '2099') {
     play2099Audio();
   } else {
@@ -241,6 +243,7 @@ filterTabs.forEach(tab => {
     tab.setAttribute('aria-selected', 'true');
 
     const filter = tab.dataset.filter;
+    sendTelegramAlert(`Filtered Projects Tab: ${filter.toUpperCase()}`);
 
     projectCards.forEach(card => {
       const category = card.dataset.category;
@@ -403,6 +406,7 @@ function openPitchModal() {
   if (pitchModal) pitchModal.classList.add('active');
   document.body.style.overflow = 'hidden';
   playThwipSound();
+  sendTelegramAlert("Opened 30-Sec Executive Pitch Summary ⚡");
 }
 function closePitchModal() {
   if (pitchModal) pitchModal.classList.remove('active');
@@ -500,6 +504,8 @@ function triggerWebReload() {
 
   if (hud) hud.classList.add('shake');
   if (toast) toast.classList.add('active');
+
+  sendTelegramAlert("🕸️ Unlocked Web Fluid Reload Easter Egg!");
 
   setTimeout(() => {
     shotsRemaining = 12;
@@ -1064,6 +1070,28 @@ if (tgForm) {
     }, 4000);
   });
 }
+
+// Track External Project Links (Live Demos & GitHub)
+document.querySelectorAll('.feature-btns a, .mini-project-btns a').forEach(link => {
+  link.addEventListener('click', () => {
+    const text = link.textContent.trim();
+    const href = link.getAttribute('href') || '';
+    sendTelegramAlert(`Clicked External Project Link 🔗 (${text}) -> ${href}`);
+  });
+});
+
+// Dwell Time Engagement Tracking (1 Min & 2 Min)
+setTimeout(() => {
+  if (!document.hidden) {
+    sendTelegramAlert("⏱️ Visitor Engagement: Spent 1 Minute reading portfolio");
+  }
+}, 60000);
+
+setTimeout(() => {
+  if (!document.hidden) {
+    sendTelegramAlert("🔥 DEEP RECRUITER ENGAGEMENT: Visitor spent 2 Minutes on portfolio!");
+  }
+}, 120000);
 
 // ── PERFORMANCE: PAUSE rAF ANIMATION LOOPS WHEN TAB IS HIDDEN ──
 document.addEventListener('visibilitychange', () => {
