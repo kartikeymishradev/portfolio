@@ -366,12 +366,14 @@ body.theme-iron .glitch-effect {
 }
 #cursor-ring {
   position: fixed; width: 30px; height: 30px;
+  top: -100px; left: -100px; opacity: 0;
   pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
+  transition: width 0.2s, height 0.2s, opacity 0.3s ease;
   mix-blend-mode: difference;
   will-change: transform;
 }
+#cursor-ring.active { opacity: 1; }
 #cursor-ring svg { width: 100%; height: 100%; display: block; overflow: visible; }
 #cursor-ring svg g { stroke: #F2EFE4; }
 #cursor-ring.hover { width: 42px; height: 42px; }

@@ -608,6 +608,7 @@ if (!isTouch) {
   let pendingMove = null;
   document.addEventListener('mousemove', e => {
     pendingMove = { x: e.clientX, y: e.clientY };
+    if (ring) ring.classList.add('active');
   });
 
   function animateRing(now) {
