@@ -124,6 +124,60 @@ function playSignalSound() {
   } catch(e) {}
 }
 
+let spider2099Audio = null;
+
+function play2099Audio() {
+  if (!soundEnabled) return;
+  try {
+    if (!spider2099Audio) {
+      spider2099Audio = new Audio('audio/spider_2099_theme.mp3');
+    }
+    spider2099Audio.currentTime = 0;
+    const p = spider2099Audio.play();
+    if (p !== undefined) {
+      p.catch(() => {
+        play2099SynthAlarm();
+      });
+    }
+  } catch(e) {
+    play2099SynthAlarm();
+  }
+}
+
+function play2099SynthAlarm() {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const now = audioCtx.currentTime;
+
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc1.type = 'sawtooth';
+    osc2.type = 'square';
+
+    osc1.frequency.setValueAtTime(880, now);
+    osc1.frequency.exponentialRampToValueAtTime(110, now + 0.5);
+
+    osc2.frequency.setValueAtTime(440, now);
+    osc2.frequency.exponentialRampToValueAtTime(55, now + 0.5);
+
+    gain.gain.setValueAtTime(0.5, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 0.6);
+    osc2.stop(now + 0.6);
+  } catch(e) {}
+}
+
 // ── 1. MULTIVERSE SPIDER-SUIT SELECTOR (4 SUITS) ──
 const suitToggleBtn = document.getElementById('suit-toggle');
 const mobileSuitToggleBtn = document.getElementById('mobile-suit-toggle');
@@ -165,7 +219,12 @@ function toggleSuitTheme() {
   const idx = suitNames.indexOf(current);
   const next = suitNames[(idx + 1) % suitNames.length];
   setSuitTheme(next);
-  playThwipSound();
+
+  if (next === '2099') {
+    play2099Audio();
+  } else {
+    playThwipSound();
+  }
 }
 
 if (suitToggleBtn) suitToggleBtn.addEventListener('click', toggleSuitTheme);
