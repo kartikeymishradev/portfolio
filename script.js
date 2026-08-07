@@ -591,6 +591,12 @@ function createWebDecal(x, y) {
   }
   const knotPath = `<path d="${knot}" stroke="#F4F1E8" stroke-width="1.2" fill="none"/>`;
 
+  // Cap concurrent .web-decal elements to maximum 5
+  const activeDecals = document.querySelectorAll('.web-decal');
+  if (activeDecals.length >= 5) {
+    activeDecals[0].remove();
+  }
+
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 100 100');
   svg.className = 'web-decal';
@@ -599,23 +605,52 @@ function createWebDecal(x, y) {
   svg.innerHTML = paths + knotPath;
 
   document.body.appendChild(svg);
-  svg.addEventListener('animationend', () => svg.remove());
+
+  // Guaranteed removal: fallback timer (700ms) + animationend listener
+  const removeSvg = () => {
+    if (svg.parentNode) svg.remove();
+  };
+  const fallbackTimer = setTimeout(removeSvg, 700);
+  svg.addEventListener('animationend', () => {
+    clearTimeout(fallbackTimer);
+    removeSvg();
+  });
 }
 
-let lastTouchTime = 0;
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+let lastTouchTapTime = 0;
 
 document.addEventListener('touchstart', (e) => {
-  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud')) return;
-  if (e.touches.length > 0) {
-    lastTouchTime = Date.now();
+  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud, .cert-modal')) return;
+  if (e.touches.length === 1) {
     const t = e.touches[0];
-    createWebDecal(t.clientX, t.clientY);
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+    touchStartTime = Date.now();
+  }
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud, .cert-modal')) return;
+  if (e.changedTouches.length > 0) {
+    const t = e.changedTouches[0];
+    const dx = Math.abs(t.clientX - touchStartX);
+    const dy = Math.abs(t.clientY - touchStartY);
+    const duration = Date.now() - touchStartTime;
+
+    // Only create decal if movement < 10px (not a scroll) and duration < 300ms (deliberate tap)
+    if (dx < 10 && dy < 10 && duration < 300) {
+      lastTouchTapTime = Date.now();
+      createWebDecal(t.clientX, t.clientY);
+    }
   }
 }, { passive: true });
 
 document.addEventListener('click', (e) => {
-  if (Date.now() - lastTouchTime < 450) return; // Ignore duplicate click right after touchstart
-  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud')) return;
+  if (Date.now() - lastTouchTapTime < 450) return; // Prevent duplicate click decal right after touchend tap
+  if (e.target.closest('a, button, input, textarea, select, .mobile-menu, nav, footer, .web-fluid-hud, .cert-modal')) return;
   createWebDecal(e.clientX, e.clientY);
 });
 
