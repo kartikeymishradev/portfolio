@@ -14,6 +14,9 @@
 <meta property="og:description" content="B.Tech CSE (AI) Student in Lucknow — Catching messy datasets and turning them into business decisions. Developer of ArthSpandan & Dintaal.">
 <meta property="og:url" content="https://kartikeymishradev.github.io/">
 <meta property="og:site_name" content="Kartikey Mishra — Data & AI">
+<meta property="og:image" content="https://portfolio-alpha-roan-38.vercel.app/spider_signal_mask.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
@@ -24,8 +27,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="spider_signal_mask.png">
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- Web Canvas & Spider Reticle Cursor -->
 <canvas id="web-canvas"></canvas>
@@ -47,13 +52,14 @@
 </div>
 
 <!-- FEATURE 4: SPIDER-SIGNAL SKY PROJECTION BEAM OVERLAY -->
-<div id="spider-signal-beam" class="spider-signal-overlay">
+<div id="spider-signal-beam" class="spider-signal-overlay" role="alert" aria-live="assertive">
   <div class="signal-spotlight">
     <div class="signal-mask-wrap">
       <img src="spider_signal_mask.png" alt="Spider-Man Signal Mask" class="signal-mask-img">
     </div>
   </div>
   <span class="signal-text comic">SPIDER-SIGNAL ACTIVE // LUCKNOW SKY</span>
+  <button class="signal-dismiss-btn comic" id="signal-dismiss" aria-label="Close Spider-Signal">TAP TO DISMISS ✕</button>
 </div>
 
 <!-- Top Comic Header Metadata Banner -->
@@ -81,12 +87,12 @@
       </button>
 
       <!-- Web Sound Effects Toggle -->
-      <button class="sound-toggle-btn comic" id="sound-toggle" title="Toggle Web Sound Effects [M]">
+      <button class="sound-toggle-btn comic" id="sound-toggle" title="Toggle Web Sound Effects [M]" aria-pressed="true" aria-label="Toggle sound effects">
         <span class="sound-icon">🔊</span> <span class="sound-label">SOUND: ON</span>
       </button>
 
       <!-- FEATURE 1: MULTIVERSE SPIDER-SUIT SELECTOR BUTTON -->
-      <button class="suit-toggle-btn comic" id="suit-toggle" title="Cycle Spider-Suit Theme [T]">
+      <button class="suit-toggle-btn comic" id="suit-toggle" title="Cycle Spider-Suit Theme [T]" aria-label="Cycle Spider-Suit theme">
         <span class="suit-icon">🕷️</span> <span class="suit-label" id="suit-label">SUIT: CLASSIC</span>
       </button>
 
@@ -155,7 +161,7 @@
 
     <div class="hero-header-row">
       <div class="status-tag"><span class="dot"></span> Available for Data & AI Roles</div>
-      <button class="comic-sfx sfx-yellow bounce-anim" id="signal-btn" title="Project Spider-Signal Beam" style="border:none; cursor:pointer;">PROJECT SPIDER-SIGNAL 🏮</button>
+      <button class="comic-sfx sfx-yellow bounce-anim" id="signal-btn" title="Project Spider-Signal Beam" aria-label="Activate Spider-Signal sky projection beam" style="border:none; cursor:pointer;">PROJECT SPIDER-SIGNAL 🏮</button>
       <span class="comic-stamp comic">WITH GREAT DATA COMES GREAT RESPONSIBILITY</span>
     </div>
     
@@ -175,6 +181,7 @@
   </div>
 </div>
 
+<main id="main-content">
 <section id="projects">
   <div class="container">
     <div class="section-title-wrap">
@@ -184,11 +191,11 @@
     <h2 class="panel-title comic reveal">Featured Builds</h2>
 
     <!-- Interactive Project Category Filter Tabs -->
-    <div class="project-filters reveal">
-      <button class="filter-tab active comic" data-filter="all">ALL BUILDS</button>
-      <button class="filter-tab comic" data-filter="ml">AI & ML</button>
-      <button class="filter-tab comic" data-filter="pwa">PWA & DATA</button>
-      <button class="filter-tab comic" data-filter="web">WEB APPS</button>
+    <div class="project-filters reveal" role="tablist" aria-label="Filter projects by category">
+      <button class="filter-tab active comic" data-filter="all" role="tab" aria-selected="true">ALL BUILDS</button>
+      <button class="filter-tab comic" data-filter="ml" role="tab" aria-selected="false">AI & ML</button>
+      <button class="filter-tab comic" data-filter="pwa" role="tab" aria-selected="false">PWA & DATA</button>
+      <button class="filter-tab comic" data-filter="web" role="tab" aria-selected="false">WEB APPS</button>
     </div>
   </div>
   
@@ -219,15 +226,15 @@
       <div class="sim-controls">
         <div class="sim-control">
           <div class="sim-lbl-row"><label>GDP Growth Rate:</label> <span id="val-gdp" class="sim-val">6.8%</span></div>
-          <input type="range" id="slider-gdp" min="2.0" max="10.0" step="0.1" value="6.8">
+          <input type="range" id="slider-gdp" min="2.0" max="10.0" step="0.1" value="6.8" aria-label="GDP Growth Rate percentage">
         </div>
         <div class="sim-control">
-          <div class="sim-lbl-row"><label>CPI Inflation Rate:</label> <span id="val-inf" class="sim-val">4.5%</span></div>
-          <input type="range" id="slider-inf" min="1.0" max="12.0" step="0.1" value="4.5">
+          <div class="sim-lbl-row"><label for="slider-inf">CPI Inflation Rate:</label> <span id="val-inf" class="sim-val">4.5%</span></div>
+          <input type="range" id="slider-inf" min="1.0" max="12.0" step="0.1" value="4.5" aria-label="CPI Inflation Rate percentage">
         </div>
         <div class="sim-control">
-          <div class="sim-lbl-row"><label>Crude Oil Price:</label> <span id="val-oil" class="sim-val">$75/bbl</span></div>
-          <input type="range" id="slider-oil" min="40" max="140" step="1" value="75">
+          <div class="sim-lbl-row"><label for="slider-oil">Crude Oil Price:</label> <span id="val-oil" class="sim-val">$75/bbl</span></div>
+          <input type="range" id="slider-oil" min="40" max="140" step="1" value="75" aria-label="Crude Oil Price per barrel">
         </div>
       </div>
     </div>
@@ -482,10 +489,10 @@
         <span class="tg-form-title">⚡ Send a Direct Signal / Message</span>
       </div>
       <div class="tg-form-row">
-        <input type="text" id="tg-name" placeholder="Your Name / Company" required>
-        <input type="text" id="tg-contact" placeholder="Your Email or LinkedIn" required>
+        <input type="text" id="tg-name" placeholder="Your Name / Company" required autocomplete="name">
+        <input type="text" id="tg-contact" placeholder="Your Email or LinkedIn" required autocomplete="email">
       </div>
-      <textarea id="tg-message" rows="3" placeholder="Type your message or project/role details here..." required></textarea>
+      <textarea id="tg-message" rows="3" placeholder="Type your message or project/role details here..." required autocomplete="off"></textarea>
       <button type="submit" class="btn btn-yellow tg-send-btn" id="tg-submit-btn">Send Signal ⚡</button>
       <span class="tg-form-status" id="tg-form-status"></span>
     </form>
@@ -497,6 +504,7 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <span class="footer-text">© 2026 Kartikey Mishra · Spider-Verse Data & AI Studio</span>
@@ -509,7 +517,7 @@
 </footer>
 
 <!-- Interactive Certificate Credential Modal -->
-<div class="cert-modal" id="cert-modal">
+<div class="cert-modal" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificate Details">
   <div class="cert-modal-dialog">
     <button class="cert-close-btn" id="cert-close">&times;</button>
     <div class="cert-badge-stamp comic">VERIFIED CREDENTIAL</div>
@@ -527,7 +535,7 @@
 </div>
 
 <!-- FEATURE 3: RECRUITER 30-SECOND PITCH MODAL -->
-<div class="cert-modal" id="pitch-modal">
+<div class="cert-modal" id="pitch-modal" role="dialog" aria-modal="true" aria-label="30-Second Executive Pitch">
   <div class="cert-modal-dialog">
     <button class="cert-close-btn" id="pitch-close">&times;</button>
     <div class="cert-badge-stamp comic">EXECUTIVE SUMMARY</div>

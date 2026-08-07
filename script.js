@@ -18,6 +18,7 @@ function setSoundState(enabled) {
     const iconEl = btn.querySelector('.sound-icon');
     if (labelEl) labelEl.textContent = enabled ? 'SOUND: ON' : 'SOUND: OFF';
     if (iconEl) iconEl.textContent = enabled ? '🔊' : '🔇';
+    btn.setAttribute('aria-pressed', String(enabled));
   });
   localStorage.setItem('spider-sound', enabled ? 'on' : 'off');
 }
@@ -211,8 +212,12 @@ const projectCards = document.querySelectorAll('.project-card');
 
 filterTabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    filterTabs.forEach(t => t.classList.remove('active'));
+    filterTabs.forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
     tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
 
     const filter = tab.dataset.filter;
 
@@ -277,7 +282,7 @@ const certData = {
     link: "certificates/ncmpcs_2026_paper.png",
     pdf: "certificates/ncmpcs_2026_paper.png",
     body: `
-      <img src="certificates/ncmpcs_2026_paper.png" alt="NCMPCS-2026 Certificate" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
+      <img src="certificates/ncmpcs_2026_paper.png" alt="NCMPCS-2026 Certificate" loading="lazy" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
       <p>Co-authored & presented research paper at NCMPCS-2026:</p>
       <ul>
         <li><strong>Paper Title:</strong> <em>"AI Driven Early Detection of Economic Slowdown in India Using Multi Sector High Frequency Indicators"</em></li>
@@ -291,7 +296,7 @@ const certData = {
     link: "certificates/conash_ai_summit_2026.png",
     pdf: "certificates/conash_ai_summit_2026.png",
     body: `
-      <img src="certificates/conash_ai_summit_2026.png" alt="CONASH AI SUMMIT 2026 Certificate" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
+      <img src="certificates/conash_ai_summit_2026.png" alt="CONASH AI SUMMIT 2026 Certificate" loading="lazy" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
       <p>Awarded Certificate of Participation for active engagement in the CONASH AI SUMMIT 2026:</p>
       <ul>
         <li><strong>Summit Theme:</strong> Computational AI & Applied Machine Learning in Multi-Disciplinary Sciences.</li>
@@ -626,7 +631,9 @@ if (!isTouch) {
     if (ring) ring.classList.add('active');
   });
 
+  let animRunning = true;
   function animateRing(now) {
+    if (!animRunning) { requestAnimationFrame(animateRing); return; }
     if (pendingMove) {
       mx = pendingMove.x; my = pendingMove.y;
       pendingMove = null;
@@ -760,7 +767,9 @@ if (!isTouch) {
 
     let wirePhase = 0;
 
+    let drawRunning = true;
     function draw() {
+      if (!drawRunning) { requestAnimationFrame(draw); return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       wirePhase += 0.045;
@@ -802,6 +811,12 @@ if (!isTouch) {
     }
     draw();
   }
+
+  // Listen for tab visibility changes to pause/resume animations
+  document.addEventListener('tab-visibility', (e) => {
+    animRunning = e.detail.visible;
+    if (typeof drawRunning !== 'undefined') drawRunning = e.detail.visible;
+  });
 }
 
 // ── 6. ARTHSPANDAN INTERACTIVE ML SLOWDOWN SIMULATOR ──
@@ -981,6 +996,13 @@ if (radarCanvas) {
 const signalBtn = document.getElementById('signal-btn');
 const spiderSignalBeam = document.getElementById('spider-signal-beam');
 
+let signalTimeout = null;
+
+function dismissSignal() {
+  if (spiderSignalBeam) spiderSignalBeam.classList.remove('active');
+  if (signalTimeout) { clearTimeout(signalTimeout); signalTimeout = null; }
+}
+
 if (signalBtn && spiderSignalBeam) {
   signalBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -990,9 +1012,14 @@ if (signalBtn && spiderSignalBeam) {
     // Trigger Telegram Bot Alert when Spider-Signal is activated!
     sendTelegramAlert("PROJECT SPIDER-SIGNAL 🏮");
 
-    setTimeout(() => {
-      spiderSignalBeam.classList.remove('active');
-    }, 3200);
+    signalTimeout = setTimeout(dismissSignal, 3200);
+  });
+
+  // Click-to-dismiss on overlay or dismiss button
+  const signalDismissBtn = document.getElementById('signal-dismiss');
+  if (signalDismissBtn) signalDismissBtn.addEventListener('click', dismissSignal);
+  spiderSignalBeam.addEventListener('click', (e) => {
+    if (e.target === spiderSignalBeam) dismissSignal();
   });
 }
 
@@ -1021,9 +1048,16 @@ const tgStatus = document.getElementById('tg-form-status');
 if (tgForm) {
   tgForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    const submitBtn = document.getElementById('tg-submit-btn');
     const name = document.getElementById('tg-name')?.value || '';
     const contact = document.getElementById('tg-contact')?.value || '';
     const message = document.getElementById('tg-message')?.value || '';
+
+    // Prevent double-click & show loading state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending... ⌛';
+    }
 
     sendTelegramAlert("Direct Message Form Submit", {
       name: name,
@@ -1035,8 +1069,21 @@ if (tgForm) {
     if (tgStatus) tgStatus.textContent = '⚡ Signal sent! Kartikey will receive your message instantly.';
     tgForm.reset();
 
+    // Restore button after delay
     setTimeout(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Signal ⚡';
+      }
       if (tgStatus) tgStatus.textContent = '';
-    }, 5000);
+    }, 4000);
   });
 }
+
+// ── PERFORMANCE: PAUSE rAF ANIMATION LOOPS WHEN TAB IS HIDDEN ──
+document.addEventListener('visibilitychange', () => {
+  const isVisible = !document.hidden;
+  // These variables are scoped inside the !isTouch block,
+  // so we dispatch a custom event to communicate visibility changes
+  document.dispatchEvent(new CustomEvent('tab-visibility', { detail: { visible: isVisible } }));
+});

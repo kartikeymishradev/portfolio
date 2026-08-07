@@ -6,7 +6,7 @@
   --red: #D6272A;
   --yellow: #F4C430;
   --blue: #1F3A78;
-  --muted: #625E52;
+  --muted: #4D4A40;
   --panel-shadow: 7px 7px 0 var(--ink);
   --panel-shadow-sm: 4px 4px 0 var(--ink);
 }
@@ -49,8 +49,8 @@ body.theme-iron {
   background-image: radial-gradient(circle, rgba(255,215,0,0.12) 1.2px, transparent 1.2px);
 }
 
-html, body { cursor: none; }
-a, button { cursor: none; }
+html, body { cursor: crosshair; }
+a, button { cursor: pointer; }
 
 body {
   background: var(--paper);
@@ -68,6 +68,19 @@ body {
 
 .comic { font-family: 'Bangers', cursive; letter-spacing: 0.03em; }
 .mono { font-family: 'IBM Plex Mono', monospace; }
+
+/* ── SKIP NAVIGATION LINK (A11Y) ── */
+.skip-link {
+  position: absolute; top: -100px; left: 16px;
+  background: var(--yellow); color: #15171C;
+  padding: 10px 20px; font-family: 'Bangers', cursive;
+  font-size: 18px; border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink); z-index: 9999;
+  text-decoration: none; transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 10px;
+}
 
 .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
@@ -139,6 +152,16 @@ body {
   text-shadow: 3px 3px 0 var(--red); letter-spacing: 0.05em;
   text-align: center; padding: 0 16px;
   white-space: nowrap;
+}
+.signal-dismiss-btn {
+  margin-top: 24px; padding: 10px 24px;
+  background: transparent; color: var(--paper);
+  border: 2px solid rgba(237,230,212,0.4);
+  font-size: 16px; letter-spacing: 0.06em;
+  opacity: 0.7; transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+.signal-dismiss-btn:hover, .signal-dismiss-btn:active {
+  opacity: 1; border-color: var(--paper);
 }
 
 /* ── FEATURE 2: SKILLS SPLIT GRID & RADAR CANVAS ── */
@@ -1008,6 +1031,9 @@ footer { text-align: center; padding: 20px 24px 40px; }
   .web-decal {
     width: 100px; height: 100px; opacity: 1;
   }
+
+  /* Hide desktop-only keyboard hints on mobile */
+  .keyboard-hints { display: none !important; }
 }
 
 /* ── SOUND EFFECTS TOGGLE BUTTON ───────────────── */
@@ -1093,4 +1119,6 @@ footer { text-align: center; padding: 20px 24px 40px; }
     color: #000000 !important;
     background: #FFFFFF !important;
   }
+
+  .tg-contact-form { display: none !important; }
 }
