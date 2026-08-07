@@ -1018,7 +1018,7 @@ if (tgForm) {
     });
 
     playThwipSound();
-    if (tgStatus) tgStatus.textContent = '⚡ SIGNAL SENT! KARTIKEY WILL RECEIVE YOUR MESSAGE INSTANTLY ON TELEGRAM.';
+    if (tgStatus) tgStatus.textContent = '⚡ Signal sent! Kartikey will receive your message instantly.';
     tgForm.reset();
 
     setTimeout(() => {
