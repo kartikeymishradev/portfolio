@@ -110,12 +110,27 @@ body {
   opacity: 1; pointer-events: auto;
 }
 .signal-spotlight {
-  width: 220px; height: 220px; color: var(--yellow);
-  filter: drop-shadow(0 0 35px var(--yellow)) drop-shadow(0 0 60px var(--red));
+  width: 220px; height: 220px;
+  filter: drop-shadow(0 0 45px var(--yellow)) drop-shadow(0 0 80px var(--red));
   animation: signal-beam-pulse 2s infinite ease-in-out;
 }
+.signal-mask-wrap {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4.5px solid var(--yellow);
+  box-shadow: 0 0 30px var(--yellow);
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+}
+.signal-mask-img {
+  width: 102%; height: 102%;
+  object-fit: cover;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
 @keyframes signal-beam-pulse {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.95; }
   50% { transform: scale(1.12) rotate(6deg); opacity: 1; }
 }
 .signal-text {
