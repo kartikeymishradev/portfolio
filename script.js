@@ -263,8 +263,9 @@ const certData = {
   goldman: {
     title: "Goldman Sachs — Controllers Virtual Experience",
     subtitle: "Issued via Forage · Job Simulation Credential",
-    link: "https://www.theforage.com/simulations/goldman-sachs/controllers-rhq",
+    link: "https://www.theforage.com/simulations/goldman-sachs",
     pdf: "certificates/controllers.pdf",
+    linkLabel: "Verify on Forage ↗",
     body: `
       <p>In this simulation with Goldman Sachs Controllers division, key contributions included:</p>
       <ul>
@@ -277,8 +278,9 @@ const certData = {
   tata: {
     title: "Tata — Data Analytics Virtual Experience",
     subtitle: "Issued via Forage · Business Data Analytics",
-    link: "https://www.theforage.com/simulations/tata/data-visualization-p5ft",
+    link: "https://www.theforage.com/simulations/tata",
     pdf: null,
+    linkLabel: "Verify on Forage ↗",
     body: `
       <p>Worked through a end-to-end data analytics workflow for Tata Group leadership:</p>
       <ul>
@@ -290,8 +292,9 @@ const certData = {
   citi: {
     title: "Citi — Personal Banking Virtual Experience",
     subtitle: "Issued via Forage · Financial & Economic Analysis",
-    link: "https://www.theforage.com/simulations/citi/personal-banking-6bvw",
+    link: "https://www.theforage.com/simulations/citi",
     pdf: "certificates/personal%20banking.pdf",
+    linkLabel: "Verify on Forage ↗",
     body: `
       <p>Applied quantitative financial modeling in personal banking scenarios:</p>
       <ul>
@@ -305,6 +308,7 @@ const certData = {
     subtitle: "National Conference on Machine Learning & Predictive Analytics · FOET DSMNRU",
     link: "certificates/ncmpcs_2026_paper.png",
     pdf: "certificates/ncmpcs_2026_paper.png",
+    linkLabel: "View Cert Image 🖼️",
     body: `
       <img src="certificates/ncmpcs_2026_paper.png" alt="NCMPCS-2026 Certificate" loading="lazy" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
       <p>Co-authored & presented research paper at NCMPCS-2026:</p>
@@ -319,6 +323,7 @@ const certData = {
     subtitle: "Department of Applied Science & Humanities · FOET DSMNRU",
     link: "certificates/conash_ai_summit_2026.png",
     pdf: "certificates/conash_ai_summit_2026.png",
+    linkLabel: "View Cert Image 🖼️",
     body: `
       <img src="certificates/conash_ai_summit_2026.png" alt="CONASH AI SUMMIT 2026 Certificate" loading="lazy" style="width:100%; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:14px; border-radius:2px;">
       <p>Awarded Certificate of Participation for active engagement in the CONASH AI SUMMIT 2026:</p>
@@ -359,7 +364,10 @@ function openCertModal(certKey) {
     });
     certBody.innerHTML = tempDiv.innerHTML;
   }
-  if (certLink) certLink.href = info.link;
+  if (certLink) {
+    certLink.href = info.link;
+    certLink.textContent = info.linkLabel || 'Verify Credential ↗';
+  }
 
   if (certPdfLink) {
     if (info.pdf) {
