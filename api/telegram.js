@@ -65,8 +65,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8719318935:AAEltW1gxcf084aat-L-AkpBSf6dW7tdq4U';
-    const CHAT_ID = process.env.TELEGRAM_CHAT_ID || '6233775039';
+    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+    if (!BOT_TOKEN || !CHAT_ID) {
+      console.error('[Telegram Config Error] Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID in environment variables.');
+      return res.status(500).json({ error: 'Telegram credentials missing in environment variables' });
+    }
 
     const body = req.body || {};
     const action = escapeHTML(body.action || 'Portfolio Visitor Interaction').slice(0, 100);
