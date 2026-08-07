@@ -49,8 +49,7 @@ body.theme-iron {
   background-image: radial-gradient(circle, rgba(255,215,0,0.12) 1.2px, transparent 1.2px);
 }
 
-html, body { cursor: crosshair; }
-a, button { cursor: pointer; }
+html, body, a, button { cursor: none !important; }
 
 body {
   background: var(--paper);
@@ -926,8 +925,8 @@ footer { text-align: center; padding: 20px 24px 40px; }
 
 /* ── MOBILE / TOUCH SPECIFIC RESPONSIVE DESIGN ─── */
 @media (max-width: 760px) {
-  html, body { cursor: auto; }
-  a, button { cursor: pointer; }
+  html, body { cursor: auto !important; }
+  a, button { cursor: pointer !important; }
   #cursor-ring, #web-canvas { display: none !important; }
 
   /* Force all scroll reveal elements to be 100% visible on mobile */
