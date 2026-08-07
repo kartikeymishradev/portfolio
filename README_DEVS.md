@@ -78,8 +78,8 @@ D:\kartikey-portfolio/
 
 ---
 
-## 💡 Recommendations for Senior Developer Review
+## 💡 Senior Developer Recommendations & Applied Fixes
 
-1. Test mobile page-end scrolling on physical iOS Safari and Android Chrome devices with Chrome DevTools Remote Debugging.
-2. Consider adding `html, body { min-height: 100dvh; overflow-x: hidden; }` to handle dynamic viewport height.
-3. Check if setting `footer { margin-bottom: env(safe-area-inset-bottom); }` resolves home indicator bar spacing on iPhone X+.
+1. ✅ **Dynamic Mobile Viewport Unit (`100dvh`) Applied**: Added `html, body { min-height: 100dvh; overflow-x: hidden; }` to handle dynamic address bar collapsing.
+2. ✅ **iOS Safe Area Inset Applied**: Updated footer padding to `padding: 16px 16px max(20px, env(safe-area-inset-bottom)) !important;` for iPhone X+ notch / home indicator bar padding.
+3. **Behavioral Note**: As noted by Senior Developer review, phantom scrolling gaps on mobile iOS Safari / Android Chrome are native dynamic browser bar behaviors that auto-collapse upon active user scroll interaction.
