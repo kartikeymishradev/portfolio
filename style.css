@@ -913,7 +913,10 @@ footer { text-align: center; padding: 20px 24px 40px; }
 @media (max-width: 760px) {
   html, body { cursor: auto; }
   a, button { cursor: pointer; }
-  #cursor-ring, #web-canvas { display: none; }
+  #cursor-ring, #web-canvas { display: none !important; }
+
+  /* Force all scroll reveal elements to be 100% visible on mobile */
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 
   /* Mobile Header / Nav */
   .nav-links, .nav-actions .suit-toggle-btn { display: none; }
@@ -927,7 +930,7 @@ footer { text-align: center; padding: 20px 24px 40px; }
     padding: 40px 20px 52px;
     margin: 16px 12px 0;
     box-shadow: 5px 5px 0 var(--ink);
-    clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+    clip-path: none !important;
   }
   .hero-title { font-size: clamp(38px, 11vw, 56px); margin-bottom: 16px; }
   
@@ -961,7 +964,7 @@ footer { text-align: center; padding: 20px 24px 40px; }
   
   .finale-panel {
     padding: 40px 20px; margin: 40px 12px 24px;
-    clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 100%);
+    clip-path: none !important;
   }
   .finale-btns { flex-direction: column; width: 100%; gap: 10px; }
 
