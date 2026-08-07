@@ -536,7 +536,8 @@ body.theme-iron .suit-toggle-btn {
   background: var(--ink); color: var(--paper);
   border: 4px solid var(--ink);
   box-shadow: var(--panel-shadow);
-  margin: 36px 24px 0;
+  max-width: 1040px;
+  margin: 36px auto 0;
   padding: 64px 48px 78px;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
@@ -638,7 +639,7 @@ section { padding: 56px 0 12px; }
 }
 
 /* ── ABOUT + EDU ROW ──────────────────────────── */
-.split-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 0; margin: 0 24px; }
+.split-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 0; max-width: 1040px; margin: 0 auto; }
 .split-panel {
   border: 4px solid var(--ink);
   padding: 30px; position: relative;
@@ -664,7 +665,8 @@ section { padding: 56px 0 12px; }
 .feature-panel {
   border: 4px solid var(--ink); background: var(--paper);
   box-shadow: var(--panel-shadow);
-  margin: 0 24px;
+  max-width: 1040px;
+  margin: 0 auto;
   padding: 36px;
   position: relative;
 }
@@ -730,7 +732,8 @@ section { padding: 56px 0 12px; }
 }
 .mini-projects-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-  margin: 0 24px 8px;
+  max-width: 1040px;
+  margin: 0 auto 8px;
 }
 .mini-project-panel {
   border: 4px solid var(--ink); background: var(--paper);
@@ -769,7 +772,7 @@ section { padding: 56px 0 12px; }
 .btn-sm:active { box-shadow: 1px 1px 0 var(--ink); }
 
 /* ── STATS CARD (SKILLS) ──────────────────────── */
-.stats-wrap { margin: 0 24px; }
+.stats-wrap { max-width: 1040px; margin: 0 auto; }
 .stats-card {
   border: 4px solid var(--ink); background: var(--paper);
   box-shadow: var(--panel-shadow);
@@ -791,7 +794,7 @@ section { padding: 56px 0 12px; }
 .tool-list b { color: var(--ink); font-weight: 600; }
 
 /* ── EXPERIENCE & CERTIFICATES ────────────────── */
-.exp-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 0 24px; }
+.exp-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1040px; margin: 0 auto; }
 .exp-panel {
   border: 4px solid var(--ink); padding: 28px; background: var(--paper);
   box-shadow: 5px 5px 0 var(--ink); display: flex; flex-direction: column;
@@ -884,7 +887,8 @@ section { padding: 56px 0 12px; }
 .finale-panel {
   background: var(--ink); color: var(--paper);
   border: 4px solid var(--ink); box-shadow: var(--panel-shadow);
-  margin: 56px 24px 40px; padding: 56px 40px; text-align: center;
+  max-width: 1040px;
+  margin: 56px auto 40px; padding: 56px 40px; text-align: center;
   clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
   position: relative;
 }
