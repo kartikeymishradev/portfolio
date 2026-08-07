@@ -135,46 +135,8 @@ function play2099Audio() {
     spider2099Audio.currentTime = 0;
     const p = spider2099Audio.play();
     if (p !== undefined) {
-      p.catch(() => {
-        play2099SynthAlarm();
-      });
+      p.catch(() => { /* Silent if MP3 missing */ });
     }
-  } catch(e) {
-    play2099SynthAlarm();
-  }
-}
-
-function play2099SynthAlarm() {
-  if (!soundEnabled) return;
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const now = audioCtx.currentTime;
-
-    const osc1 = audioCtx.createOscillator();
-    const osc2 = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc1.type = 'sawtooth';
-    osc2.type = 'square';
-
-    osc1.frequency.setValueAtTime(880, now);
-    osc1.frequency.exponentialRampToValueAtTime(110, now + 0.5);
-
-    osc2.frequency.setValueAtTime(440, now);
-    osc2.frequency.exponentialRampToValueAtTime(55, now + 0.5);
-
-    gain.gain.setValueAtTime(0.5, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + 0.6);
-    osc2.stop(now + 0.6);
   } catch(e) {}
 }
 
